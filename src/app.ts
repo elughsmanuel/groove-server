@@ -5,6 +5,9 @@ import http from "http";
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import bodyParser from 'body-parser';
 import { PrismaClient } from '@prisma/client';
+import { errorMiddleware } from './middleware/errorMiddleware';
+import authRouter from './auth/routers/authRouter';
+import userRouter from './user/routers/userRouter';
 
 const app = express();
 const host = process.env.HOST || 'localhost';
@@ -36,26 +39,10 @@ app.get('/api/v1', (req, res) => {
     });
 });
 
-app.post('/api/v1/products', async (req, res) => {
-    const { name, description, price, category, quantity } = req.body;
 
-    if (!name || !description || !price || !category || !quantity) {
-        return res.status(400).json({ error: 'Name, price, category, and quantity are required fields' });
-    }
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 
-    const newProduct = await prisma.product.create({
-        data: {
-          name, 
-          description,
-          price,
-          category,
-          quantity,
-        },
-    });
-
-    res.status(201).json(newProduct);
-
-});
 
 app.all('*', (req, res) => {
     return res.status(StatusCodes.NOT_FOUND).json({
@@ -68,6 +55,8 @@ const startServer = async () => {
     try {
         await prisma.$connect();
         console.log(`[DATABASE] - Database connection has been successfully established.`);
+
+        app.use(errorMiddleware);
 
         try {
             httpServer.listen(port, host, () => {
