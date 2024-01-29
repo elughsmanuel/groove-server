@@ -4,16 +4,15 @@ import { UserRole } from "@prisma/client";
 const prisma = new PrismaClient();
 
 class UserRepository {
-    async createUser(data: any) {
+    async createUser(firstName: string, lastName: string, email: string, username: string, password: string) {
         const user = await prisma.user.create({
             data: {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                username: data.username,
-                password: data.password,
-                confirmPassword: data.confirmPassword,
-            },
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            username: username,
+            password: password,
+          }
         });
 
         return user;

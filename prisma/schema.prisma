@@ -18,7 +18,6 @@ model User {
   username              String      @db.VarChar(255) @unique
   role                  UserRole    @default(user)
   password              String      @db.VarChar(255)
-  confirmPassword       String      @db.VarChar(255)
   resetPasswordToken    String?     @db.VarChar(255)
   resetPasswordExpires  DateTime?   @db.Timestamptz(3)
   createdAt             DateTime    @default(now()) @db.Timestamptz(3)

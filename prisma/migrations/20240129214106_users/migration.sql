@@ -10,7 +10,6 @@ CREATE TABLE "users" (
     "username" VARCHAR(255) NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'user',
     "password" VARCHAR(255) NOT NULL,
-    "confirmPassword" VARCHAR(255) NOT NULL,
     "resetPasswordToken" VARCHAR(255),
     "resetPasswordExpires" TIMESTAMPTZ(3),
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

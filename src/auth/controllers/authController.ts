@@ -21,7 +21,15 @@ export const signUp = async (
     try {
         const schema = await signUpSchema.validateAsync(req.body);
 
-        const signUp = await authService.signUp(schema, res);
+        const signUp = await authService.signUp(
+            schema.firstName,
+            schema.lastName,
+            schema.email,
+            schema.username,
+            schema.password,
+            schema.confirmPassword,
+            res,
+        );
 
         return res.status(StatusCodes.OK).json(signUp);
     } catch (error) {

@@ -39,10 +39,8 @@ app.get('/api/v1', (req, res) => {
     });
 });
 
-
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
-
 
 app.all('*', (req, res) => {
     return res.status(StatusCodes.NOT_FOUND).json({

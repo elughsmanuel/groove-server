@@ -29,8 +29,21 @@ class AuthService {
         this.emailService = new EmailService();
     }
 
-    async signUp(data: any, res: Response) {
-        const user = await this.userRepository.createUser(data);
+    async signUp(firstName: string, lastName: string, email: string, username: string, password: string, confirmPassword: string, res: Response) {
+        // Password matching
+        const passwordMatch = password === confirmPassword;
+
+        if(!passwordMatch) {
+            throw new UnprocessableEntity(MATCHING_PASSWORD);
+        }
+
+        const user = await this.userRepository.createUser(
+            firstName,
+            lastName,
+            email,
+            username,
+            password,
+        );
         
         // Generate an access token for the user
         const accessToken = createToken(res, user.id.toString(), user.role);
