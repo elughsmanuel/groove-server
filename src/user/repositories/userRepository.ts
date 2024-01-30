@@ -15,28 +15,15 @@ class UserRepository {
           }
         });
 
-        function sanitizeUser(user: Prisma.UserGetPayload<any>) {
-          const { password, resetPasswordToken, resetPasswordExpires, ...sanitizedUser } = user;
-          
-          return sanitizedUser;
-        }
-
-        const sanitizedUser = sanitizeUser(user);
-
-        return sanitizedUser;
+        return user;
     }
 
     async findByEmailAndPassword(email: string) {
         const user = await prisma.user.findUnique({
-            where: {
-              email: email,
-            },
-            select: {
-                id: true,
-                password: true,
-                role: true,
-            },
-          });
+          where: {
+            email: email,
+          },
+        });
       
         return user;
     }
