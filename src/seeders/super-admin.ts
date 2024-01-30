@@ -9,9 +9,9 @@ async function seedData() {
     try {
         console.log(`[SEEDING] - Seeding started...`);
 
-           // Hash the new password and update the user's password
-           const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
-           const hashedPassword = await bcrypt.hash(String(process.env.SUPER_ADMIN_PASSWORD), salt);
+        // Hash the new password and update the user's password
+        const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
+        const hashedPassword = await bcrypt.hash(String(process.env.SUPER_ADMIN_PASSWORD), salt);
 
         // Seeing process
         await prisma.user.create({

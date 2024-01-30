@@ -9,7 +9,15 @@
     "start": "cross-env NODE_ENV=production node dist/app.js",
     "predev": "npm run build",
     "dev": "concurrently \"npx tsc -w\" \"nodemon dist/app.js\" ",
-    "test": "jest"
+    "test": "jest",
+    "migrate:dev": "npx prisma migrate dev",
+    "migrate:reset": "npx prisma migrate reset",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "migrate:status": "npx prisma migrate status",
+    "migrate:resolve": "npx prisma migrate resolve",
+    "migrate:diff": "npx prisma migrate diff",
+    "migrate:diff:from-to": "npx prisma migrate diff --from-url \"$FROM_DATABASE_URL\" --to-url \"$TO_DATABASE_URL\" --script",
+    "migrate:seed": "npm run migrate:deploy &&  node dist/seeders/super-admin.js"
   },
   "keywords": [],
   "author": "",
