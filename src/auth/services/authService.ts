@@ -31,18 +31,20 @@ class AuthService {
 
     async signUp(firstName: string, lastName: string, email: string, username: string, password: string, confirmPassword: string, res: Response) {
         // Password matching
-        const passwordMatch = password === confirmPassword;
-
-        if(!passwordMatch) {
+        if (password !== confirmPassword) {
             throw new UnprocessableEntity(MATCHING_PASSWORD);
         }
+
+        // Hash the new password and update the user's password
+        const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const user = await this.userRepository.createUser(
             firstName,
             lastName,
             email,
             username,
-            password,
+            hashedPassword,
         );
         
         // Generate an access token for the user
