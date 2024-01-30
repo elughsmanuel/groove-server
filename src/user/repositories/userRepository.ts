@@ -187,24 +187,27 @@ class UserRepository {
             id: parseInt(userId, 10),
           },
           data: {
-            role: role as UserRole,
+            role: role,
           },
         });
       
         return updatedUserRole;
       }
 
-
-      async createSuperAdmin(data: any) {
-        const createdUser = await prisma.user.create({
-          data: {
-            ...data,
-          },
+      async createSuperAdmin(firstName: string, lastName: string, email: string, username: string, role: any, password: string) {
+        const user = await prisma.user.create({
+            data: {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            username: username,
+            role: role,
+            password: password,
+          }
         });
-      
-        return createdUser;
-      }
-      
+
+        return user;
+    } 
 }
 
 export default UserRepository;

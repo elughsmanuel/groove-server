@@ -155,7 +155,7 @@ export const updateUserRole = async (
 
         const user = await userService.updateUserRole(
             userId, 
-            schema,
+            schema.role,
         );
 
         return res.status(StatusCodes.OK).json(user);

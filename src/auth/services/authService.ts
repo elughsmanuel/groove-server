@@ -154,10 +154,38 @@ class AuthService {
         };
     }
 
-    async superAdmin(data: any, res: Response) {
-        const user = await this.userRepository.createSuperAdmin(data);
+    async superAdmin(firstName: string, lastName: string, email: string, username: string, role: string, password: string, confirmPassword: string, res: Response) {
+        const emailExist = await this.userRepository.findByEmail(email);
+
+        if(emailExist) {
+            throw new UnprocessableEntity(UNIQUE_EMAIL);
+        }
+
+        const usernameExist = await this.userRepository.findByUsername(username);
+
+        if(usernameExist) {
+            throw new UnprocessableEntity(UNIQUE_USERNAME);
+        }
+
+        // Password matching
+        if (password !== confirmPassword) {
+            throw new UnprocessableEntity(MATCHING_PASSWORD);
+        }
+
+        // Hash the new password and update the user's password
+        const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const user = await this.userRepository.createSuperAdmin(
+            firstName,
+            lastName,
+            email,
+            username,
+            role,
+            hashedPassword,
+        );
         
-        // Generate an access token for the super admin
+        // Generate an access token for the user
         const accessToken = createToken(res, user.id.toString(), user.role);
 
         return { 

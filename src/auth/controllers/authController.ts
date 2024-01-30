@@ -102,7 +102,16 @@ export const superAdmin = async (
             role: SUPER_ADMIN,
         });
 
-        const superAdmin = await authService.superAdmin(schema, res);
+        const superAdmin = await authService.superAdmin(
+            schema.firstName,
+            schema.lastName,
+            schema.email,
+            schema.username,
+            schema.role,
+            schema.password,
+            schema.confirmPassword, 
+            res,
+            );
 
         return res.status(StatusCodes.OK).json(superAdmin);
     } catch (error) {
