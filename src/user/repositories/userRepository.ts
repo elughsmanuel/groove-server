@@ -18,7 +18,7 @@ class UserRepository {
         return user;
     }
 
-    async findByEmailAndPassword(email: string) {
+    async findByEmail(email: string) {
         const user = await prisma.user.findUnique({
           where: {
             email: email,
@@ -27,6 +27,16 @@ class UserRepository {
       
         return user;
     }
+
+    async findByUsername(username: string) {
+      const user = await prisma.user.findUnique({
+        where: {
+          username: username,
+        },
+      });
+    
+      return user;
+  }
 
     async updateUserResetToken(userId: string, token: string, expires: Date) {
         const updatedUser = await prisma.user.update({
@@ -40,16 +50,6 @@ class UserRepository {
         });
       
         return updatedUser;
-    }
-
-    async findByEmail(email: string) {
-        const user = await prisma.user.findUnique({
-          where: {
-            email: email,
-          },
-        });
-      
-        return user;
     }
 
     async findByResetToken(email: string, token: string) {

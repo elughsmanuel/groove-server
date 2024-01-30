@@ -11,6 +11,8 @@ import {
     MATCHING_PASSWORD,
     PASSWORD_CHANGED,
     INVALID_TOKEN,
+    UNIQUE_EMAIL,
+    UNIQUE_USERNAME,
 } from '../utils/constants';
 import BadRequest from '../../errors/BadRequest';
 import EmailService from '../../utils/mailer';
@@ -30,6 +32,18 @@ class AuthService {
     }
 
     async signUp(firstName: string, lastName: string, email: string, username: string, password: string, confirmPassword: string, res: Response) {
+        const emailExist = await this.userRepository.findByEmail(email);
+
+        if(emailExist) {
+            throw new UnprocessableEntity(UNIQUE_EMAIL);
+        }
+
+        const usernameExist = await this.userRepository.findByUsername(username);
+
+        if(usernameExist) {
+            throw new UnprocessableEntity(UNIQUE_USERNAME);
+        }
+
         // Password matching
         if (password !== confirmPassword) {
             throw new UnprocessableEntity(MATCHING_PASSWORD);
@@ -58,7 +72,7 @@ class AuthService {
     }
 
     async login(email: string, password: string, res: Response) {
-        const user = await this.userRepository.findByEmailAndPassword(email);
+        const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
             throw new Unauthenticated(WRONG_CREDENTIALS);

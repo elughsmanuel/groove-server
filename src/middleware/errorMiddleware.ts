@@ -4,6 +4,7 @@ import Joi from 'joi';
 import Unauthenticated from '../errors/Unauthenticated';
 import BadRequest from '../errors/BadRequest';
 import UnprocessableEntity from '../errors/UnprocessableEntity';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { 
     UNIQUE_EMAIL,
     UNIQUE_USERNAME,
@@ -47,37 +48,17 @@ export const errorMiddleware = (
         });
     }
 
-    // Handle MongoDB unique constraint violation errors
-    if (err.name === VALIDATION_ERROR && err.code === VALIDATION_ERROR_CODE) {
-        const field = Object.keys(err.keyPattern)[0];
+    // Handle Prisma unique constraint violation errors
+    if (err instanceof PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+            const match = err.message.match(/Unique constraint failed on the fields: \((.*?)\)/);
+            const fields = match ? match[1].split(', ') : [];
 
-        if (field === 'email') {
-            return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-                success: false,
-                data: UNIQUE_EMAIL,
-            });
-        } else if (field === 'username') {
-            return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-                success: false,
-                data: UNIQUE_USERNAME,
-            });
-        } else {
             return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
                 success: false,
                 data: UNIQUE_CONSTRAINT,
             });
         }
-    }
-
-    // Handle MongoDB CastError for invalid ObjectID
-    if (err.name === 'CastError' && err.kind === 'ObjectId') {
-        const match = err.stack.match(/at path "_id" for model "(.*?)"/);
-        const modelName = match ? match[1] : 'unknown';
-
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            success: false,
-            data: `Invalid ${modelName} ID`,
-        });
     }
 
     // Handle errors in development by logging the stack
