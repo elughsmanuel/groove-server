@@ -90,31 +90,3 @@ export const resetPassword = async (
         next(error);
     }
 };
-
-export const superAdmin = async (
-    req: Request, 
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const schema = await signUpSchema.validateAsync({
-            ...req.body,
-            role: SUPER_ADMIN,
-        });
-
-        const superAdmin = await authService.superAdmin(
-            schema.firstName,
-            schema.lastName,
-            schema.email,
-            schema.username,
-            schema.role,
-            schema.password,
-            schema.confirmPassword, 
-            res,
-            );
-
-        return res.status(StatusCodes.OK).json(superAdmin);
-    } catch (error) {
-        next(error);
-    }
-};
