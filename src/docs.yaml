@@ -20,7 +20,7 @@ paths:
                 required: true
             responses:
                 "201":
-                    description: Created
+                    description: CREATED
                     content:
                         application/json; charset=utf-8:
                             schema:
@@ -42,12 +42,63 @@ paths:
                 required: true
             responses:
                 "200":
-                    description: Login successful
+                    description: OK
                     content:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
                                     - $ref: "#/components/schemas/login-response"
+    /api/v1/auth/forgot-password:
+        post:
+            tags:
+                - Auth
+            summary: forgot password request
+            description: forgot password request
+            operationId: forgot_password
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/forgot-password-request"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/forgot-password-response"
+    /api/v1/auth/reset-password:
+        patch:
+            tags:
+                - Auth
+            summary: reset password request
+            description: reset password request
+            operationId: reset_password
+            parameters:
+                - in: query
+                  name: token
+                  schema:
+                      type: string
+                      description: token for reset password
+                  
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/reset-password-request"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/reset-password-response"
 
 components:
     securitySchemes:
@@ -58,6 +109,7 @@ components:
     schemas:
         sign-up-request:
             title: SignUpRequest
+            type: object
             required:
                 - firstName
                 - lastName
@@ -65,7 +117,6 @@ components:
                 - username
                 - password
                 - confirmPassword
-            type: object
             properties:
                 firstName:
                     type: string
@@ -85,35 +136,7 @@ components:
             required:
                 - success
                 - data
-                - token
-            properties:
-                success:
-                    type: boolean
-                token:
-                    type: string
-                data:
-                    allOf:
-                        - $ref: "#/components/schemas/user-response-data"
-                        - {}
-        login-request:
-            title: LoginRequest
-            required:
-                - email
-                - password
-            type: object
-            properties:
-                email:
-                    type: string
-                password:
-                    type: string
-        login-response:
-            title: LoginResponse
-            required:
-                - success
-                - data
                 - accessToken
-                - refreshToken
-            type: object
             properties:
                 success:
                     type: boolean
@@ -123,7 +146,32 @@ components:
                         - {}
                 accessToken:
                     type: string
-                refreshToken:
+        login-request:
+            title: LoginRequest
+            type: object
+            required:
+                - email
+                - password
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
+        login-response:
+            title: LoginResponse
+            type: object
+            required:
+                - success
+                - data
+                - accessToken
+            properties:
+                success:
+                    type: boolean
+                data:
+                    allOf:
+                        - $ref: "#/components/schemas/user-response-data"
+                        - {}
+                accessToken:
                     type: string
         user-response-data:
             title: UserResponseData
@@ -161,6 +209,50 @@ components:
                 createdAt:
                     type: string
                 updatedAt:
+                    type: string
+        forgot-password-request:
+            title: ForgotPasswordRequest
+            type: object
+            required:
+                - email
+            properties:
+                email:
+                    type: string
+        forgot-password-response:
+            title: ForgotPasswordResponse
+            type: object
+            required:
+                - success
+                - message
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+        reset-password-request:
+            title: ResetPasswordRequest
+            type: object
+            required:
+                - email
+                - password
+                - confirmPassword
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
+                confirmPassword:
+                    type: string
+        reset-password-response:
+            title: ResetPasswordResponse
+            type: object
+            required:
+                - success
+                - message
+            properties:
+                success:
+                    type: boolean
+                message:
                     type: string
 
 tags:
