@@ -5,6 +5,9 @@ import http from "http";
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import bodyParser from 'body-parser';
 import { PrismaClient } from '@prisma/client';
+import path from 'path';
+import swaggerUI from 'swagger-ui-express';
+import yamljs from 'yamljs';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import authRouter from './auth/routers/authRouter';
 import userRouter from './user/routers/userRouter';
@@ -15,6 +18,8 @@ const port = Number(process.env.PORT || 8000);
 const httpServer = http.createServer(app);
 
 const prisma = new PrismaClient()
+
+const docs = yamljs.load(path.join(__dirname, '../src/docs.yaml'));
 
 app.use(bodyParser.json());
 
@@ -41,6 +46,7 @@ app.get('/api/v1', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(docs));
 
 app.all('*', (req, res) => {
     return res.status(StatusCodes.NOT_FOUND).json({
