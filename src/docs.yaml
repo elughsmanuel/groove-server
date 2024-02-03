@@ -98,7 +98,26 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/get-my-profile-response"
+                                    - $ref: "#/components/schemas/profile-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/users/profile/update-my-profile:
+        patch:
+            tags:
+                - user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/update-my-profile-request"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
 
 components:
@@ -255,7 +274,7 @@ components:
                     type: boolean
                 message:
                     type: string
-        get-my-profile-response:
+        profile-response:
             title: GetMyProfileResponse
             type: object
             required:
@@ -268,6 +287,18 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/user-response-data"
                         - {}
+        update-my-profile-request:
+            title: UpdateMyProfileRequest
+            type: object
+            properties:
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                email:
+                    type: string
+                username:
+                    type: string
 
 tags:
     - name: auth
