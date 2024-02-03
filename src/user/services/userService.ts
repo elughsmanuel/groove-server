@@ -117,7 +117,7 @@ class UserService {
 
         return {
             status: true,
-            data: PASSWORD_CHANGED,
+            message: PASSWORD_CHANGED,
         }
     }
 
@@ -132,7 +132,7 @@ class UserService {
 
         return {
             status: true,
-            data: USER_DELETED,
+            message: USER_DELETED,
         }
     }
 
@@ -181,7 +181,7 @@ class UserService {
 
         return {
             status: true,
-            data: USER_DELETED,
+            message: USER_DELETED,
         }
     }
 }

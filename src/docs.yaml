@@ -119,6 +119,26 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/profile/update-my-password:
+        patch:
+            tags:
+                - user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/update-my-password-request"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/update-my-password-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -298,6 +318,31 @@ components:
                 email:
                     type: string
                 username:
+                    type: string
+        update-my-password-request:
+            title: UpdateMyPasswordRequest
+            type: object
+            required:
+                - password
+                - newPassword
+                - confirmPassword
+            properties:
+                password:
+                    type: string
+                newPassword:
+                    type: string
+                confirmPassword:
+                    type: string
+        update-my-password-response:
+            title: UpdateMyPasswordResponse
+            type: object
+            required:
+                - success
+                - message
+            properties:
+                success:
+                    type: boolean
+                message:
                     type: string
 
 tags:
