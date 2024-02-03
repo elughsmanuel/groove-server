@@ -139,6 +139,19 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/update-my-password-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/profile/delete-me:
+        delete:
+            tags:
+                - user
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/delete-me-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -335,6 +348,17 @@ components:
                     type: string
         update-my-password-response:
             title: UpdateMyPasswordResponse
+            type: object
+            required:
+                - success
+                - message
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+        delete-me-response:
+            title: DeleteMeResponse
             type: object
             required:
                 - success
