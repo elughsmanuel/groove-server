@@ -87,10 +87,23 @@ paths:
                             schema:
                                 allOf:
                                     - $ref: "#/components/schemas/reset-password-response"
+    /api/v1/users/profile/get-my-profile:
+        get:
+            tags:
+                - user
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/get-my-profile-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
-        bearerToken:
+        bearerAuth:
             type: http
             scheme: bearer
             bearerFormat: JWT
@@ -242,6 +255,20 @@ components:
                     type: boolean
                 message:
                     type: string
+        get-my-profile-response:
+            title: GetMyProfileResponse
+            type: object
+            required:
+                - success
+                - data
+            properties:
+                success:
+                    type: boolean
+                data:
+                    allOf:
+                        - $ref: "#/components/schemas/user-response-data"
+                        - {}
 
 tags:
     - name: auth
+    - name: user
