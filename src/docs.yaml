@@ -174,6 +174,27 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/get-users"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/get-user/{id}:
+        get:
+            tags:
+                - admin
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/get-user"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -409,6 +430,19 @@ components:
                     type: integer
                 totalPages:
                     type: integer
+        get-user:
+            title: GetUser
+            type: object
+            required:
+                - success
+                - data
+            properties:
+                success:
+                    type: boolean
+                data:
+                allOf:
+                    - $ref: "#/components/schemas/user-response-data"
+                    - {}
 
 tags:
     - name: auth
