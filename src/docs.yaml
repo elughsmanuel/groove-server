@@ -152,6 +152,28 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/delete-me-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users:
+        get:
+            tags:
+                - admin
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: number
+                - in: query
+                  name: perPage
+                  schema:
+                      type: number
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/get-users"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -368,7 +390,27 @@ components:
                     type: boolean
                 message:
                     type: string
+        get-users:
+            title: GetUsers
+            type: object
+            required:
+                - success
+                - data
+                - currentPage
+                - totalPages
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items: 
+                        $ref: "#/components/schemas/user-response-data"
+                currentPage:
+                    type: integer
+                totalPages:
+                    type: integer
 
 tags:
     - name: auth
     - name: user
+    - name: admin
