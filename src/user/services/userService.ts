@@ -38,7 +38,6 @@ class UserService {
 
         return {
             status: true,
-            results: users.length,
             data: users,
             currentPage: currentPage,
             totalPages: totalPages,
