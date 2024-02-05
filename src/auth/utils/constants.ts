@@ -25,7 +25,7 @@ export const WRONG_CREDENTIALS = "Incorrect email or password";
 export const VALIDATION_ERROR = "MongoServerError";
 export const VALIDATION_ERROR_CODE = 11000;
 
-export const FORGOT_PASSWORD_REQUESTED = "Password reset successfully requested"
+export const FORGOT_PASSWORD_REQUESTED = "Password reset successfully requested";
 export const PASSWORD_CHANGED = "Password successfully changed";
 
 export const INVALID_TOKEN ="Token has expired or invalid";

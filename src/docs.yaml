@@ -249,6 +249,27 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/delete-user/{id}:
+        delete:
+            tags:
+                - super-admin
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/delete-me-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
