@@ -109,7 +109,7 @@ paths:
                     application/json:
                         schema:
                             allOf:
-                                - $ref: "#/components/schemas/update-my-profile-request"
+                                - $ref: "#/components/schemas/profile-request"
             responses:
                 "200":
                     description: OK
@@ -172,7 +172,7 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/get-users"
+                                    - $ref: "#/components/schemas/get-users-response"
             security: [{ bearerAuth: [] }]
     /api/v1/users/get-user/{id}:
         get:
@@ -193,7 +193,34 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/get-user"
+                                    - $ref: "#/components/schemas/profile-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/users/update-user/{id}:
+        patch:
+            tags:
+                - admin
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/profile-request"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
 
 components:
@@ -363,8 +390,8 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/user-response-data"
                         - {}
-        update-my-profile-request:
-            title: UpdateMyProfileRequest
+        profile-request:
+            title: ProfileRequest
             type: object
             properties:
                 firstName:
@@ -411,8 +438,8 @@ components:
                     type: boolean
                 message:
                     type: string
-        get-users:
-            title: GetUsers
+        get-users-response:
+            title: GetUsersResponse
             type: object
             required:
                 - success
@@ -430,19 +457,6 @@ components:
                     type: integer
                 totalPages:
                     type: integer
-        get-user:
-            title: GetUser
-            type: object
-            required:
-                - success
-                - data
-            properties:
-                success:
-                    type: boolean
-                data:
-                allOf:
-                    - $ref: "#/components/schemas/user-response-data"
-                    - {}
 
 tags:
     - name: auth
