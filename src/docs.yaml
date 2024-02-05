@@ -222,6 +222,33 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/update-user-role/{id}:
+        patch:
+            tags:
+                - super-admin
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/role-request"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/profile-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -457,8 +484,17 @@ components:
                     type: integer
                 totalPages:
                     type: integer
+        role-request:
+            title: RoleRequest
+            type: object
+            required:
+                - role
+            properties:
+                role:
+                    type: string
 
 tags:
     - name: auth
     - name: user
     - name: admin
+    - name: super-admin
