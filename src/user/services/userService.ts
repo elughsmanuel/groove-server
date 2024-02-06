@@ -42,6 +42,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }));
@@ -68,6 +70,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -92,6 +96,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -118,6 +124,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -198,6 +206,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -224,6 +234,8 @@ class UserService {
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }

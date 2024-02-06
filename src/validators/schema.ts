@@ -40,7 +40,6 @@ export const signUpSchema = Joi.object({
         "any.required": USERNAME_REQUIRED,
         "string.empty": EMPTY_USERNAME,
     }),
-    role: Joi.string().trim(),
     password: Joi.string().trim().min(8).required().messages({
         "any.required": PASSWORD_REQUIRED,
         "string.empty": EMPTY_PASSWORD,

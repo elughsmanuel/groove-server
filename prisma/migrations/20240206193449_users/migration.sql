@@ -1,5 +1,8 @@
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('admin', 'user');
+CREATE TYPE "UserRole" AS ENUM ('user', 'admin');
+
+-- CreateEnum
+CREATE TYPE "UserAccess" AS ENUM ('listener', 'artist', 'admin');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -9,6 +12,8 @@ CREATE TABLE "users" (
     "email" VARCHAR(255) NOT NULL,
     "username" VARCHAR(255) NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'user',
+    "access" "UserAccess" NOT NULL DEFAULT 'listener',
+    "premium" BOOLEAN NOT NULL DEFAULT false,
     "password" VARCHAR(255) NOT NULL,
     "resetPasswordToken" VARCHAR(255),
     "resetPasswordExpires" TIMESTAMPTZ(3),

@@ -17,6 +17,8 @@ model User {
   email                 String      @db.VarChar(255) @unique
   username              String      @db.VarChar(255) @unique
   role                  UserRole    @default(user)
+  access                UserAccess  @default(listener)
+  premium               Boolean     @default(false)
   password              String      @db.VarChar(255)
   resetPasswordToken    String?     @db.VarChar(255)
   resetPasswordExpires  DateTime?   @db.Timestamptz(3)
@@ -27,6 +29,12 @@ model User {
 }
 
 enum UserRole {
-  admin
   user
+  admin
+}
+
+enum UserAccess {
+  listener
+  artist
+  admin
 }

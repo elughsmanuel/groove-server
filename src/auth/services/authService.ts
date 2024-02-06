@@ -83,13 +83,15 @@ class AuthService {
             throw new Unauthenticated(WRONG_CREDENTIALS);
         }
 
-        const data = {
+        const userData = {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             username: user.username,
             role: user.role,
+            access: user.access,
+            premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -100,7 +102,7 @@ class AuthService {
 
         return {
             success: true,
-            data,
+            userData,
             accessToken,
         };
     }
