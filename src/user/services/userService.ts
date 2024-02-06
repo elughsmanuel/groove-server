@@ -60,9 +60,20 @@ class UserService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
+        const data = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
+
         return {
             status: true,
-            data: user,
+            data,
         }
     }
 
