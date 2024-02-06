@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import UserRepository from '../../user/repositories/userRepository';
@@ -104,14 +103,19 @@ class AuthService {
         // Generate a reset token and set its expiration time
         const generateResetToken = () => {
             const token = crypto.randomBytes(32).toString('hex');
+
             return token;
         };
 
         const resetToken = generateResetToken();
+
+        // Hash the new token going to the database
+        const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
         const tokenExpiresIn = Number(process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN);
         const expirationTime = new Date(Date.now() + tokenExpiresIn * 60 * 1000);
 
-        await this.userRepository.updateUserResetToken(user.id.toString(), resetToken, expirationTime);
+        await this.userRepository.updateUserResetToken(user.id.toString(), hashedToken, expirationTime);
 
         // Send a reset password email to the user
         await this.emailService.sendResetPasswordEmail(user.email, resetToken);
@@ -133,7 +137,10 @@ class AuthService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const validToken = await this.userRepository.findByResetToken(email, token);
+        // Hash the new token coming from the email
+        const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+        const validToken = await this.userRepository.findByResetToken(email, hashedToken);
 
         if (!validToken) {
             throw new BadRequest(INVALID_TOKEN);
