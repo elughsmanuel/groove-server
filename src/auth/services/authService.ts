@@ -83,12 +83,24 @@ class AuthService {
             throw new Unauthenticated(WRONG_CREDENTIALS);
         }
 
+        const data = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
+
+
         // Generate an access token for the authenticated user
         const accessToken = generateToken(res, user.id.toString(), user.role);
 
         return {
             success: true,
-            data: user,
+            data,
             accessToken,
         };
     }
