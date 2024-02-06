@@ -36,9 +36,20 @@ class UserService {
 
         const users = await this.userRepository.getAllUsers(role, skip, perPage);
 
+        const userData = users.map(user => ({
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }));
+
         return {
             status: true,
-            data: users,
+            data: userData,
             currentPage: currentPage,
             totalPages: totalPages,
         }
