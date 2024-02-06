@@ -47,9 +47,24 @@ class UserService {
     async getUserById(userId: string) {
         const user = await this.userRepository.getUserById(userId);
 
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const userData = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
+
         return {
             status: true,
-            data: user,
+            data: userData,
         }
     }
 
