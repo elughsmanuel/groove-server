@@ -199,9 +199,9 @@ class UserService {
     }
 
     async updateUserRole(userId: string, role: string) {
-        const user = await this.userRepository.getUserById(userId);
+        const userExist = await this.userRepository.getUserById(userId);
 
-        if(!user) {
+        if(!userExist) {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
@@ -209,11 +209,23 @@ class UserService {
             throw new BadRequest(INVALID_ROLE);
         }
 
-        const updatedUserRole = await this.userRepository.updateUserRole(userId, role);
+        const user = await this.userRepository.updateUserRole(userId, role);
+
+        const userData = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
+
 
         return {
             status: true,
-            data: updatedUserRole,
+            data: userData,
         }
     }
 
