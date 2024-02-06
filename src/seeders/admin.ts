@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs';
-import { SUPER_ADMIN } from "../auth/utils/constants";
+import { ADMIN } from "../auth/utils/constants";
 
 const prisma = new PrismaClient();
 
@@ -11,16 +11,16 @@ async function seedData() {
 
         // Hash the new password and update the user's password
         const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
-        const hashedPassword = await bcrypt.hash(String(process.env.SUPER_ADMIN_PASSWORD), salt);
+        const hashedPassword = await bcrypt.hash(String(process.env.ADMIN_PASSWORD), salt);
 
         // Seeing process
         await prisma.user.create({
             data: {
-                firstName: String(process.env.SUPER_ADMIN_FIRST_NAME),
-                lastName: String(process.env.SUPER_ADMIN_LAST_NAME),
-                email: String(process.env.SUPER_ADMIN_EMAIL),
-                username: String(process.env.SUPER_ADMIN_USERNAME),
-                role: SUPER_ADMIN,
+                firstName: String(process.env.ADMIN_FIRST_NAME),
+                lastName: String(process.env.ADMIN_LAST_NAME),
+                email: String(process.env.ADMIN_EMAIL),
+                username: String(process.env.ADMIN_USERNAME),
+                role: ADMIN,
                 password: hashedPassword,
             },
         });

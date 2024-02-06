@@ -40,6 +40,5 @@ export const INCORRECT_PASSWORD = "Incorrect password";
 export const SAME_PASSWORD = "Current password cannot be the same as new password";
 
 export const ADMIN = "admin";
-export const SUPER_ADMIN = "super_admin";
 
 export const USER_NOT_FOUND = "User not found";

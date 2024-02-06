@@ -7,7 +7,6 @@ import {
     INCORRECT_PASSWORD,
     MATCHING_PASSWORD,
     SAME_PASSWORD,
-    SUPER_ADMIN,
 } from '../../auth/utils/constants';
 import { 
     USER_NOT_FOUND,
@@ -214,10 +213,6 @@ class UserService {
 
         if(!userExist) {
             throw new BadRequest(USER_NOT_FOUND);
-        }
-
-        if (role === SUPER_ADMIN) {
-            throw new BadRequest(INVALID_ROLE);
         }
 
         const user = await this.userRepository.updateUserRole(userId, role);

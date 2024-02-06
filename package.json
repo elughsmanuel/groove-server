@@ -17,7 +17,9 @@
     "migrate:resolve": "npx prisma migrate resolve",
     "migrate:diff": "npx prisma migrate diff",
     "migrate:diff:from-to": "npx prisma migrate diff --from-url \"$FROM_DATABASE_URL\" --to-url \"$TO_DATABASE_URL\" --script",
-    "migrate:seed": "npm run migrate:deploy &&  node dist/seeders/super-admin.js"
+    "migrate:dev:seed": "npm run migrate:dev &&  node dist/seeders/admin.js",
+    "migrate:reset:seed": "npm run migrate:reset &&  node dist/seeders/admin.js",
+    "migrate:deploy:seed": "npm run migrate:deploy &&  node dist/seeders/admin.js"
   },
   "keywords": [],
   "author": "",

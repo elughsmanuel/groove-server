@@ -8,7 +8,6 @@ import {
 } from '../../validators/schema';
 import AuthService from '../services/authService';
 import UserRepository from '../../user/repositories/userRepository';
-import { SUPER_ADMIN } from '../utils/constants';
 
 const userRepository = new UserRepository();
 const authService = new AuthService(userRepository);

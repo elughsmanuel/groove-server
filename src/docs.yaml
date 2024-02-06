@@ -225,7 +225,7 @@ paths:
     /api/v1/users/update-user-role/{id}:
         patch:
             tags:
-                - super-admin
+                - admin
             parameters:
                 - name: id
                   in: path
@@ -252,7 +252,7 @@ paths:
     /api/v1/users/delete-user/{id}:
         delete:
             tags:
-                - super-admin
+                - admin
             parameters:
                 - name: id
                   in: path
@@ -518,4 +518,3 @@ tags:
     - name: auth
     - name: user
     - name: admin
-    - name: super-admin

@@ -2,7 +2,6 @@ import express from 'express';
 import { 
     authenticate, 
     isAdmin, 
-    isSuperAdmin,
 } from '../../middleware/authMiddleware';
 import { 
     getAllUsers,
@@ -25,7 +24,7 @@ userRouter.patch('/profile/update-my-profile', authenticate, updateMyProfile);
 userRouter.patch('/profile/update-my-password', authenticate, updateMyPassword);
 userRouter.delete('/profile/delete-me', authenticate, deleteMe);
 userRouter.patch('/update-user/:userId', authenticate, isAdmin, updateUser);
-userRouter.patch('/update-user-role/:userId', authenticate, isSuperAdmin, updateUserRole);
-userRouter.delete('/delete-user/:userId', authenticate, isSuperAdmin, deleteUser);
+userRouter.patch('/update-user-role/:userId', authenticate, isAdmin, updateUserRole);
+userRouter.delete('/delete-user/:userId', authenticate, isAdmin, deleteUser);
 
 export default userRouter;

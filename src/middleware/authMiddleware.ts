@@ -6,7 +6,6 @@ import {
     AUTH_TOKEN_EXPIRED,
     AUTH_TOKEN_PERMISSION,
     ADMIN,
-    SUPER_ADMIN,
  } from '../auth/utils/constants';
 
 const SECRET_KEY = String(process.env.JWT_SECRET);
@@ -61,26 +60,7 @@ export const isAdmin = (
     // To retrieve the role
     const decodedUser = (req as any).user;
 
-    if (decodedUser && (decodedUser.role === ADMIN || decodedUser.role === SUPER_ADMIN)) {
-        next();
-    } else {
-        return res.status(StatusCodes.FORBIDDEN).json({
-            success: false,
-            error: AUTH_TOKEN_PERMISSION,
-        });
-    }
-};
-
-export const isSuperAdmin = (
-    req: Request& { user?: any}, 
-    res: Response, 
-    next: NextFunction,
-) => {
-    // Extract decoded user information
-    // To retrieve the role
-    const decodedUser = (req as any).user;
-
-    if (decodedUser && decodedUser.role === SUPER_ADMIN) {
+    if (decodedUser && decodedUser.role === ADMIN) {
         next();
     } else {
         return res.status(StatusCodes.FORBIDDEN).json({
