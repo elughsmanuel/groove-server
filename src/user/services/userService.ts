@@ -173,17 +173,28 @@ class UserService {
     }
 
     async updateUser(userId: string, data: any) {
-        const user = await this.userRepository.getUserById(userId);
+        const userExist = await this.userRepository.getUserById(userId);
 
-        if(!user) {
+        if(!userExist) {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const updatedUser = await this.userRepository.updateUser(userId, data);
+        const user = await this.userRepository.updateUser(userId, data);
+
+        const userData = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
 
         return {
             status: true,
-            data: updatedUser,
+            data: userData,
         }
     }
 
