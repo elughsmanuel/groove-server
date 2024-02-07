@@ -11,6 +11,7 @@ import {
 import { 
     USER_NOT_FOUND,
     USER_DELETED,
+    SWITCHED_TO_ARTIST,
 } from '../utils/constants';
 
 class UserService {
@@ -132,6 +133,21 @@ class UserService {
         return {
             status: true,
             data: userData,
+        }
+    }
+
+    async switchToArtist(userId: string, data: any) {
+        const userExist = await this.userRepository.getUserById(userId);
+
+        if(!userExist) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        await this.userRepository.switchToArtist(userId, data);
+
+        return {
+            status: true,
+            message: SWITCHED_TO_ARTIST,
         }
     }
 

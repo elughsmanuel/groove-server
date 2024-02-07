@@ -8,6 +8,7 @@ import {
     getUserById,
     getMyProfile,
     updateMyProfile,
+    switchToArtist,
     updateMyPassword,
     deleteMe,
     updateUser,
@@ -21,6 +22,7 @@ userRouter.get('/', authenticate, isAdmin, getAllUsers);
 userRouter.get('/get-user/:userId', authenticate, isAdmin, getUserById);
 userRouter.get('/profile/get-my-profile', authenticate, getMyProfile);
 userRouter.patch('/profile/update-my-profile', authenticate, updateMyProfile);
+userRouter.patch('/profile/switch-to-artist', authenticate, switchToArtist);
 userRouter.patch('/profile/update-my-password', authenticate, updateMyPassword);
 userRouter.delete('/profile/delete-me', authenticate, deleteMe);
 userRouter.patch('/update-user/:userId', authenticate, isAdmin, updateUser);

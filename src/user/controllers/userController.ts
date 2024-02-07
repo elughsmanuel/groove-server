@@ -7,6 +7,7 @@ import {
     updatePasswordSchema,
     updateUserRoleSchema,
  } from '../../validators/schema';
+ import { ARTIST } from '../utils/constants';
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -77,6 +78,25 @@ export const updateMyProfile = async (
         const user = await userService.updateMyProfile(
             String(req.userId),
             schema,
+        );
+
+        return res.status(StatusCodes.OK).json(user);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const switchToArtist = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const access = ARTIST;
+
+        const user = await userService.switchToArtist(
+            String(req.userId), 
+            access,
         );
 
         return res.status(StatusCodes.OK).json(user);
