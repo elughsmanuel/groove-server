@@ -119,6 +119,19 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/users/profile/switch-to-artist:
+        patch:
+            tags:
+                - user
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/switch-to-artist-response"
+            security: [{ bearerAuth: [] }]
     /api/v1/users/profile/update-my-password:
         patch:
             tags:
@@ -511,6 +524,17 @@ components:
                 - role
             properties:
                 role:
+                    type: string
+        switch-to-artist-response:
+            title: SwitchToArtistResponse
+            type: object
+            required:
+                - success
+                - message
+            properties:
+                success:
+                    type: boolean
+                message:
                     type: string
 
 tags:
