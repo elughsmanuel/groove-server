@@ -6,11 +6,7 @@ import BadRequest from '../errors/BadRequest';
 import UnprocessableEntity from '../errors/UnprocessableEntity';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { 
-    UNIQUE_EMAIL,
-    UNIQUE_USERNAME,
     UNIQUE_CONSTRAINT,
-    VALIDATION_ERROR,
-    VALIDATION_ERROR_CODE,
  } from '../auth/utils/constants';
 
 export const errorMiddleware = (

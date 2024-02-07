@@ -22,9 +22,6 @@ export const VALID_PASSWORD = "Your password must be at least 8 characters long"
 export const MATCHING_PASSWORD = "Passwords do not match";
 export const WRONG_CREDENTIALS = "Incorrect email or password";
 
-export const VALIDATION_ERROR = "MongoServerError";
-export const VALIDATION_ERROR_CODE = 11000;
-
 export const FORGOT_PASSWORD_REQUESTED = "Password reset successfully requested";
 export const PASSWORD_CHANGED = "Password successfully changed";
 
