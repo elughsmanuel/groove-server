@@ -11,7 +11,6 @@ import {
 import { 
     USER_NOT_FOUND,
     USER_DELETED,
-    INVALID_ROLE,
 } from '../utils/constants';
 
 class UserService {

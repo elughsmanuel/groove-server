@@ -59,13 +59,26 @@ class AuthService {
             username,
             hashedPassword,
         );
+
+        const userData = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            access: user.access,
+            premium: user.premium,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
         
         // Generate an access token for the user
         const accessToken = createToken(res, user.id.toString(), user.role);
 
         return { 
             success: true, 
-            data: user,
+            data: userData,
             accessToken,
         }
     }
