@@ -130,7 +130,20 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/switch-to-artist-response"
+                                    - $ref: "#/components/schemas/switch-user-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/users/profile/switch-to-listener:
+        patch:
+            tags:
+                - user
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/switch-user-response"
             security: [{ bearerAuth: [] }]
     /api/v1/users/profile/update-my-password:
         patch:
@@ -545,8 +558,8 @@ components:
             properties:
                 role:
                     type: string
-        switch-to-artist-response:
-            title: SwitchToArtistResponse
+        switch-user-response:
+            title: SwitchUserResponse
             type: object
             required:
                 - success

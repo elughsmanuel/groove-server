@@ -7,7 +7,10 @@ import {
     updatePasswordSchema,
     updateUserRoleSchema,
  } from '../../validators/schema';
- import { ARTIST } from '../utils/constants';
+ import {
+     ARTIST,
+     LISTENER,
+} from '../utils/constants';
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -95,6 +98,25 @@ export const switchToArtist = async (
         const access = ARTIST;
 
         const user = await userService.switchToArtist(
+            String(req.userId), 
+            access,
+        );
+
+        return res.status(StatusCodes.OK).json(user);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const switchToListener = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const access = LISTENER;
+
+        const user = await userService.switchToListener(
             String(req.userId), 
             access,
         );

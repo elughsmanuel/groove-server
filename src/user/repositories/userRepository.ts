@@ -158,6 +158,19 @@ class UserRepository {
       return switchedToArtist;
     }
 
+    async switchToListener(userId: string, access: any) {
+      const switchedToArtist = await prisma.user.update({
+        where: {
+          id: parseInt(userId, 10),
+        },
+        data: {
+          access: access,
+        },
+      });
+      
+        return switchedToArtist;
+      }
+
     async findPasswordByUserId(userId: string) {
         const user = await prisma.user.findUnique({
           where: {
