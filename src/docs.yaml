@@ -283,6 +283,26 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/delete-me-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/music/add-song:
+        post:
+            tags:
+                - music
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/add-song-request"
+                required: true
+            responses:
+                "201":
+                    description: CREATED
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/add-song-response"
+            security: [{ bearerAuth: [] }]
 
 components:
     securitySchemes:
@@ -536,8 +556,90 @@ components:
                     type: boolean
                 message:
                     type: string
+        add-song-request:
+            title: AddSongRequest
+            type: object
+            required:
+                - title
+                - artist
+                - album
+                - genre
+                - releaseYear
+                - url
+                - albumArt
+            properties:
+                title:
+                    type: string
+                artist:
+                    type: string
+                album:
+                    type: string
+                genre:
+                    type: string
+                releaseYear:
+                    type: integer
+                    format: int32
+                url:
+                    type: string
+                albumArt:
+                    type: string
+        add-song-response:
+            title: AddSongResponse
+            type: object
+            required:
+                - success
+                - data
+            properties:
+                success:
+                    type: boolean
+                data:
+                    allOf:
+                        - $ref: "#/components/schemas/add-song-response-data"
+                        - {}
+        add-song-response-data:
+            title: AddSongResponseData
+            type: object
+            required:
+                - id
+                - title
+                - artist
+                - album
+                - genre
+                - releaseYear
+                - url
+                - albumArt
+                - userId
+                - createdAt
+                - updatedAt
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                title:
+                    type: string
+                artist:
+                    type: string
+                album:
+                    type: string
+                genre:
+                    type: string
+                releaseYear:
+                    type: integer
+                    format: int32
+                url:
+                    type: string
+                albumArt:
+                    type: string
+                userId:
+                    type: integer
+                    format: int32
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
 
 tags:
     - name: auth
     - name: user
     - name: admin
+    - name: music

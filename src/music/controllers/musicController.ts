@@ -30,7 +30,7 @@ export const addSong = async (
             schema.albumArt,
         );
 
-        return res.status(StatusCodes.OK).json(addSong);
+        return res.status(StatusCodes.CREATED).json(addSong);
     } catch (error) {
         next(error);
     }

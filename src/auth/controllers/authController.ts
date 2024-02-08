@@ -30,7 +30,7 @@ export const signUp = async (
             res,
         );
 
-        return res.status(StatusCodes.OK).json(signUp);
+        return res.status(StatusCodes.CREATED).json(signUp);
     } catch (error) {
         next(error);
     }
