@@ -97,12 +97,12 @@ export const switchToArtist = async (
     try {
         const access = ARTIST;
 
-        const user = await userService.switchToArtist(
+        const switchToArtist = await userService.switchToArtist(
             String(req.userId), 
             access,
         );
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(StatusCodes.OK).json(switchToArtist);
     } catch (error) {
         next(error);
     }
@@ -116,12 +116,12 @@ export const switchToListener = async (
     try {
         const access = LISTENER;
 
-        const user = await userService.switchToListener(
+        const switchToListener = await userService.switchToListener(
             String(req.userId), 
             access,
         );
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(StatusCodes.OK).json(switchToListener);
     } catch (error) {
         next(error);
     }
@@ -135,14 +135,14 @@ export const updateMyPassword = async (
     try {
         const schema = await updatePasswordSchema.validateAsync(req.body);
 
-        const user = await userService.updateMyPassword(
+        const updateMyPassword = await userService.updateMyPassword(
             String(req.userId),
             schema.password,
             schema.newPassword,
             schema.confirmPassword,
         );
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(StatusCodes.OK).json(updateMyPassword);
     } catch (error) {
         next(error);
     }
@@ -154,11 +154,11 @@ export const deleteMe = async (
     next: NextFunction,
 ) => {
     try {
-        const user = await userService.deleteMe(
+        const deleteMe = await userService.deleteMe(
             String(req.userId)
         );
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(StatusCodes.OK).json(deleteMe);
     } catch (error) {
         next(error);
     }
@@ -214,11 +214,11 @@ export const deleteUser = async (
     try {
         const { userId } = req.params;
 
-        const user = await userService.deleteUser(
+        const deleteUser = await userService.deleteUser(
             userId, 
         );
 
-        return res.status(StatusCodes.OK).json(user);
+        return res.status(StatusCodes.OK).json(deleteUser);
     } catch (error) {
         next(error);
     }
