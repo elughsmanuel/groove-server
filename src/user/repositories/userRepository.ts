@@ -207,13 +207,14 @@ class UserRepository {
         return updatedUser;
     }
 
-    async updateUserRole(userId: string, role: any) {
+    async updateUserRole(userId: string, role: any, access: any) {
         const updatedUserRole = await prisma.user.update({
           where: {
             id: parseInt(userId, 10),
           },
           data: {
             role: role,
+            access: access,
           },
         });
       

@@ -250,13 +250,20 @@ class UserService {
     }
 
     async updateUserRole(userId: string, role: string) {
-        const userExist = await this.userRepository.getUserById(userId);
+        const user = await this.userRepository.getUserById(userId);
 
-        if(!userExist) {
+        if(!user) {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const user = await this.userRepository.updateUserRole(userId, role);
+        let access = user.access;
+        if (role === 'admin') {
+            access = 'admin';
+        } else if (role === 'user') {
+            access = 'listener';
+        }
+
+        await this.userRepository.updateUserRole(userId, role, access);
 
         const userData = {
             id: user.id,
@@ -264,8 +271,8 @@ class UserService {
             lastName: user.lastName,
             email: user.email,
             username: user.username,
-            role: user.role,
-            access: user.access,
+            role: role,
+            access: access,
             premium: user.premium,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
