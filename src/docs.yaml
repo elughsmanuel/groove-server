@@ -292,7 +292,7 @@ paths:
     /api/v1/music/add-song:
         post:
             tags:
-                - music
+                - artist
             requestBody:
                 content:
                     application/json:
@@ -308,6 +308,49 @@ paths:
                             schema:
                                 allOf:
                                     - $ref: "#/components/schemas/add-song-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/music/songs:
+        get:
+            tags:
+                - artist
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: number
+                - in: query
+                  name: perPage
+                  schema:
+                      type: number
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/get-songs-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/music/get-song/{id}:
+        get:
+            tags:
+                - artist
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/song-response"
             security: [{ bearerAuth: [] }]
 
 components:
@@ -589,10 +632,10 @@ components:
                     type: boolean
                 data:
                     allOf:
-                        - $ref: "#/components/schemas/add-song-response-data"
+                        - $ref: "#/components/schemas/song-response-data"
                         - {}
-        add-song-response-data:
-            title: AddSongResponseData
+        song-response-data:
+            title: SongResponseData
             type: object
             required:
                 - id
@@ -640,9 +683,41 @@ components:
             properties:
                 access:
                     type: string
+        get-songs-response:
+            title: GetSongsResponse
+            type: object
+            required:
+                - success
+                - data
+                - currentPage
+                - totalPages
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items: 
+                        $ref: "#/components/schemas/song-response-data"
+                currentPage:
+                    type: integer
+                totalPages:
+                    type: integer
+        song-response:
+            title: SongResponse
+            type: object
+            required:
+                - success
+                - data
+            properties:
+                success:
+                    type: boolean
+                data:
+                    allOf:
+                        - $ref: "#/components/schemas/song-response-data"
+                        - {}
 
 tags:
     - name: auth
     - name: user
     - name: admin
-    - name: music
+    - name: artist
