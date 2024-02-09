@@ -20,6 +20,8 @@ import {
     PASSWORD_NEW_REQUIRED,
     EMPTY_NEW_PASSWORD,
     VALID_NEW_PASSWORD,
+    ACCESS_REQUIRED,
+    EMPTY_ACCESS,
 } from "../auth/utils/constants";
 
 export const signUpSchema = Joi.object({
@@ -97,6 +99,13 @@ export const updateUserSchema = Joi.object({
         "string.email": "Please provide a valid email address",
     }),
     username: Joi.string().trim(),
+});
+
+export const switchUserAccessSchema = Joi.object({
+    access: Joi.string().valid('listener', 'artist', 'curator', 'advertiser').required().messages({
+        "any.required": ACCESS_REQUIRED,
+        "string.empty": EMPTY_ACCESS,
+    }),
 });
 
 export const updateUserRoleSchema = Joi.object({

@@ -39,3 +39,6 @@ export const SAME_PASSWORD = "Current password cannot be the same as new passwor
 export const ADMIN = "admin";
 
 export const USER_NOT_FOUND = "User not found";
+
+export const ACCESS_REQUIRED = "Access is required";
+export const EMPTY_ACCESS = "Access cannot be empty";

@@ -137,33 +137,31 @@ class UserService {
         }
     }
 
-    async switchToArtist(userId: string, data: any) {
-        const userExist = await this.userRepository.getUserById(userId);
+    async switchUserAccess(userId: string, access: any) {
+        const user = await this.userRepository.getUserById(userId);
 
-        if(!userExist) {
+        if(!user) {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        await this.userRepository.switchToArtist(userId, data);
+        await this.userRepository.switchUserAccess(userId, access);
+
+        const userData = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            access: access,
+            premium: user.premium,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        }
 
         return {
             status: true,
-            message: SWITCHED_TO_ARTIST,
-        }
-    }
-
-    async switchToListener(userId: string, data: any) {
-        const userExist = await this.userRepository.getUserById(userId);
-
-        if(!userExist) {
-            throw new BadRequest(USER_NOT_FOUND);
-        }
-
-        await this.userRepository.switchToListener(userId, data);
-
-        return {
-            status: true,
-            message: SWITCHED_TO_LISTENER,
+            data: userData,
         }
     }
 

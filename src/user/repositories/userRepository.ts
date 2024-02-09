@@ -145,8 +145,8 @@ class UserRepository {
         return updatedUser;
     }
 
-    async switchToArtist(userId: string, access: any) {
-		const switchedToArtist = await prisma.user.update({
+    async switchUserAccess(userId: string, access: any) {
+		const switchUserAccess = await prisma.user.update({
 			where: {
 				id: parseInt(userId, 10),
 			},
@@ -155,21 +155,8 @@ class UserRepository {
 			},
 		});
     
-      return switchedToArtist;
-    }
-
-    async switchToListener(userId: string, access: any) {
-      const switchedToArtist = await prisma.user.update({
-        where: {
-          id: parseInt(userId, 10),
-        },
-        data: {
-          access: access,
-        },
-      });
-      
-        return switchedToArtist;
-      }
+      return switchUserAccess;
+    } 
 
     async findPasswordByUserId(userId: string) {
         const user = await prisma.user.findUnique({
@@ -219,7 +206,7 @@ class UserRepository {
         });
       
         return updatedUserRole;
-      }
+    }
 }
 
 export default UserRepository;

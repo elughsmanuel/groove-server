@@ -5,6 +5,7 @@ import UserRepository from '../repositories/userRepository';
 import { 
     updateUserSchema,
     updatePasswordSchema,
+    switchUserAccessSchema,
     updateUserRoleSchema,
  } from '../../validators/schema';
  import {
@@ -89,39 +90,20 @@ export const updateMyProfile = async (
     }
 };
 
-export const switchToArtist = async (
+export const switchUserAccess = async (
     req: Request & {userId?: string}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const access = ARTIST;
+        const schema = await switchUserAccessSchema.validateAsync(req.body);
 
-        const switchToArtist = await userService.switchToArtist(
+        const user = await userService.switchUserAccess(
             String(req.userId), 
-            access,
+            schema.access,
         );
 
-        return res.status(StatusCodes.OK).json(switchToArtist);
-    } catch (error) {
-        next(error);
-    }
-};
-
-export const switchToListener = async (
-    req: Request & {userId?: string}, 
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const access = LISTENER;
-
-        const switchToListener = await userService.switchToListener(
-            String(req.userId), 
-            access,
-        );
-
-        return res.status(StatusCodes.OK).json(switchToListener);
+        return res.status(StatusCodes.OK).json(user);
     } catch (error) {
         next(error);
     }
