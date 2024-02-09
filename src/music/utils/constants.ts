@@ -1,2 +1,2 @@
 export const USER_NOT_FOUND = "USER_NOT_FOUND";
-export const LISTENERS_NOT_ALLOWED = "Sorry, listeners CANNOT perform this action.";
+export const ARTIST_ADMIN_ALLOWED = "Sorry, only artists and admins CAN perform this action.";

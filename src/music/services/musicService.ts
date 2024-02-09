@@ -3,7 +3,7 @@ import MusicRepository from '../repositories.ts/musicRepository';
 import BadRequest from '../../errors/BadRequest';
 import {
     USER_NOT_FOUND,
-    LISTENERS_NOT_ALLOWED,
+    ARTIST_ADMIN_ALLOWED,
 } from '../utils/constants';
 
 class MusicService {
@@ -27,8 +27,8 @@ class MusicService {
 
         const access = user.access;
 
-        if(access === 'listener') {
-            throw new BadRequest(LISTENERS_NOT_ALLOWED);
+        if(access !== 'artist' && access !== 'admin') {
+            throw new BadRequest(ARTIST_ADMIN_ALLOWED);
         }
 
         const music = await this.musicRepository.addSong(

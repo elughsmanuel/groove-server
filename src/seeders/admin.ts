@@ -22,7 +22,6 @@ async function seedData() {
                 username: String(process.env.ADMIN_USERNAME),
                 role: ADMIN,
                 access: ADMIN,
-                premium: true,
                 password: hashedPassword,
             },
         });

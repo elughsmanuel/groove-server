@@ -36,6 +36,8 @@ enum UserRole {
 enum UserAccess {
     listener
     artist
+    curator
+    advertiser
     admin
 }
 

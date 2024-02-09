@@ -2,7 +2,7 @@
 CREATE TYPE "UserRole" AS ENUM ('user', 'admin');
 
 -- CreateEnum
-CREATE TYPE "UserAccess" AS ENUM ('listener', 'artist', 'admin');
+CREATE TYPE "UserAccess" AS ENUM ('listener', 'artist', 'curator', 'advertiser', 'admin');
 
 -- CreateTable
 CREATE TABLE "users" (
