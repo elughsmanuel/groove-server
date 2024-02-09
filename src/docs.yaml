@@ -119,10 +119,16 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/users/profile/switch-to-artist:
+    /api/v1/users/profile/switch-user-access:
         patch:
             tags:
                 - user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/access-request"
             responses:
                 "200":
                     description: OK
@@ -130,20 +136,7 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/switch-user-response"
-            security: [{ bearerAuth: [] }]
-    /api/v1/users/profile/switch-to-listener:
-        patch:
-            tags:
-                - user
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json; charset=utf-8:
-                            schema:
-                                allOf:
-                                    - $ref: "#/components/schemas/switch-user-response"
+                                    - $ref: "#/components/schemas/profile-response"
             security: [{ bearerAuth: [] }]
     /api/v1/users/profile/update-my-password:
         patch:
@@ -558,17 +551,6 @@ components:
             properties:
                 role:
                     type: string
-        switch-user-response:
-            title: SwitchUserResponse
-            type: object
-            required:
-                - success
-                - message
-            properties:
-                success:
-                    type: boolean
-                message:
-                    type: string
         add-song-request:
             title: AddSongRequest
             type: object
@@ -649,6 +631,14 @@ components:
                 createdAt:
                     type: string
                 updatedAt:
+                    type: string
+        access-request:
+            title: AccessRequest
+            type: object
+            required:
+                - access
+            properties:
+                access:
                     type: string
 
 tags:
