@@ -35,3 +35,26 @@ export const addSong = async (
         next(error);
     }
 };
+
+export const getAllSongs = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { 
+            page,
+            perPage,
+        } = req.query;
+
+        const songs = await musicService.getAllSongs(
+            String(req.userId),
+            parseFloat(page as string) || '1',
+            parseFloat(perPage as string || '10'),
+        );
+
+        return res.status(StatusCodes.OK).json(songs);
+    } catch (error) {
+        next(error);
+    }
+};

@@ -47,6 +47,33 @@ class MusicService {
             data: music,
         }
     }
+
+    async getAllSongs(userId: string, page: any, perPage: any,) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const count = await this.musicRepository.getTotalSongCount(userId);
+
+        // Calculate pagination values
+        const skip = (page - 1) * perPage;
+        const currentPage = Math.ceil(page);
+        const totalPages = Math.ceil(count / perPage);
+
+        const songs = await this.musicRepository.getAllSongs(userId, skip, perPage);
+
+
+        return { 
+            success: true, 
+            data: songs,
+            currentPage: currentPage,
+            totalPages: totalPages,
+        }
+    }
+
+
 }
 
 export default MusicService;

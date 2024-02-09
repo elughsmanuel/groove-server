@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -18,6 +18,32 @@ class MusicRepository {
         });
 
         return music;
+    }
+
+    async getTotalSongCount(userId: string) {
+        const count = await prisma.song.count({
+            where: {
+                userId: parseInt(userId, 10),
+            },
+        });
+      
+        return count;
+    }
+
+    async getAllSongs(userId: string, skip: any, perPage: any) {
+        const query: Prisma.SongWhereInput = {};
+      
+        if (userId) {
+            query.userId = parseInt(userId, 10);
+        }
+      
+        const songs = await prisma.song.findMany({
+            where: query,
+            skip: parseInt(skip, 10) || undefined,
+            take: parseInt(perPage, 10) || undefined,
+        });
+      
+        return songs;
     }
 }
 
