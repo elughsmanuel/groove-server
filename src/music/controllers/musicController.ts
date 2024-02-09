@@ -58,3 +58,22 @@ export const getAllSongs = async (
         next(error);
     }
 };
+
+export const getSongById = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { songId } = req.params;
+
+        const song = await musicService.getSongById(
+            String(req.userId),
+            Number(songId),
+        );
+
+        return res.status(StatusCodes.OK).json(song);
+    } catch (error) {
+        next(error);
+    }
+};

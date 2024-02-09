@@ -45,6 +45,17 @@ class MusicRepository {
       
         return songs;
     }
+
+    async getSongById(userId: string, songId: number) {
+        const song = await prisma.song.findUnique({
+          where: {
+            userId: parseInt(userId, 10),
+            id: songId,
+          },
+        });
+      
+        return song;
+    }
 }
 
 export default MusicRepository;

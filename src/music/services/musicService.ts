@@ -73,7 +73,24 @@ class MusicService {
         }
     }
 
+    async getSongById(userId: string, songId: number) {
+        const user = await this.userRepository.getUserById(userId);
 
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const song = await this.musicRepository.getSongById(userId, songId);
+
+        if(!song) {
+            throw new BadRequest('SONG_NOT_FOUND');
+        }
+
+        return {
+            status: true,
+            data: song,
+        }
+    }
 }
 
 export default MusicService;
