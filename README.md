@@ -49,7 +49,27 @@ PORT=server_port
 DATABASE_URL="postgresql://postgres:password@localhost:5432/groove?schema=public"
 ```
 
-Replace node_environment, server_host, server_port, database_url with your values.
+Replace: node_environment, server_host, server_port and database_url with your values.
+
+## Database Migrations and Seeding
+
+Before running the application, ensure that you've performed database migrations and seeding to set up the database schema and populate it with initial data.
+
+Add the necessary environment variables for admin details in the .env file to seed the data:
+
+```bash
+ADMIN_FIRST_NAME=admin_first_name
+ADMIN_LAST_NAME=admin_last_name
+ADMIN_EMAIL=admin_email
+ADMIN_USERNAME=admin_username
+ADMIN_PASSWORD=admin_password
+```
+
+To deploy migrations and seed the database, use the following npm scripts:
+
+```bash
+npm run migrate:deploy:seed
+```
 
 ## Install app dependencies
 
