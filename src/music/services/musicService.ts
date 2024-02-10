@@ -112,6 +112,27 @@ class MusicService {
             data: song,
         }
     }
+
+    async deleteSong(userId: string, songId: number) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const songExist = await this.musicRepository.getSongById(userId, songId);
+
+        if(!songExist) {
+            throw new BadRequest('SONG_NOT_FOUND');
+        }
+
+        await this.musicRepository.deleteSong(userId, songId);
+
+        return {
+            status: true,
+            message: 'SONG_DELETED',
+        }
+    }
 }
 
 export default MusicService;

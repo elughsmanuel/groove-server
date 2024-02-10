@@ -70,6 +70,17 @@ class MusicRepository {
       
         return song;
     }
+
+    async deleteSong(userId: string, songId: number) {
+        const song = await prisma.song.delete({
+          where: {
+            userId: parseInt(userId, 10),
+            id: songId,
+          }
+        });
+      
+        return song;
+    }
 }
 
 export default MusicRepository;

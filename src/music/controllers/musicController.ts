@@ -100,3 +100,22 @@ export const updateSong = async (
         next(error);
     }
 };
+
+export const deleteSong = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { songId } = req.params;
+
+        const deleteSong = await musicService.deleteSong(
+            String(req.userId),
+            Number(songId),
+        );
+
+        return res.status(StatusCodes.OK).json(deleteSong);
+    } catch (error) {
+        next(error);
+    }
+};
