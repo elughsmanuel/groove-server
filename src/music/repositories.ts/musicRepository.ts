@@ -56,6 +56,20 @@ class MusicRepository {
       
         return song;
     }
+
+    async updateSong(userId: string, songId: number, data: any) {
+        const song = await prisma.song.update({
+          where: {
+            userId: parseInt(userId, 10),
+            id: songId,
+          },
+          data: {
+            ...data,
+          },
+        });
+      
+        return song;
+    }
 }
 
 export default MusicRepository;

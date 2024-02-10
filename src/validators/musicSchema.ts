@@ -31,3 +31,13 @@ export const songSchema = Joi.object({
         "string.empty": "Album art URL cannot be empty",
     }),
 });
+
+export const updateSongSchema = Joi.object({
+    title: Joi.string().trim(),
+    artist: Joi.string().trim(),
+    album: Joi.string().trim(),
+    genre: Joi.string().trim(),
+    releaseYear: Joi.number().integer(),
+    url: Joi.string().trim(),
+    albumArt: Joi.string().trim(),
+});

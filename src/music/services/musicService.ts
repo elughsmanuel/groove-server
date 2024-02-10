@@ -91,6 +91,27 @@ class MusicService {
             data: song,
         }
     }
+
+    async updateSong(userId: string, songId: number, data: any) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const songExist = await this.musicRepository.getSongById(userId, songId);
+
+        if(!songExist) {
+            throw new BadRequest('SONG_NOT_FOUND');
+        }
+
+        const song = await this.musicRepository.updateSong(userId, songId, data);
+
+        return {
+            status: true,
+            data: song,
+        }
+    }
 }
 
 export default MusicService;

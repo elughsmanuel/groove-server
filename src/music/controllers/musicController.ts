@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { 
     songSchema, 
+    updateSongSchema,
 } from '../../validators/musicSchema';
 import MusicService from '../services/musicService';
 import UserRepository from '../../user/repositories/userRepository';
@@ -70,6 +71,28 @@ export const getSongById = async (
         const song = await musicService.getSongById(
             String(req.userId),
             Number(songId),
+        );
+
+        return res.status(StatusCodes.OK).json(song);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateSong = async (
+    req: Request & {userId?: string}, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { songId } = req.params;
+
+        const schema = await updateSongSchema.validateAsync(req.body);
+
+        const song = await musicService.updateSong(
+            String(req.userId),
+            Number(songId),
+            schema,
         );
 
         return res.status(StatusCodes.OK).json(song);
