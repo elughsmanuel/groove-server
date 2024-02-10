@@ -169,7 +169,7 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/delete-me-response"
+                                    - $ref: "#/components/schemas/delete-response"
             security: [{ bearerAuth: [] }]
     /api/v1/users:
         get:
@@ -287,7 +287,7 @@ paths:
                         application/json; charset=utf-8:
                             schema:
                                 allOf:
-                                    - $ref: "#/components/schemas/delete-me-response"
+                                    - $ref: "#/components/schemas/delete-response"
             security: [{ bearerAuth: [] }]
     /api/v1/music/add-song:
         post:
@@ -351,6 +351,54 @@ paths:
                             schema:
                                 allOf:
                                     - $ref: "#/components/schemas/song-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/music/update-song/{id}:
+        patch:
+            tags:
+                - artist
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            allOf:
+                                - $ref: "#/components/schemas/song-request"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/song-response"
+            security: [{ bearerAuth: [] }]
+    /api/v1/music/delete-song/{id}:
+        delete:
+            tags:
+                - artist
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/delete-response"
             security: [{ bearerAuth: [] }]
 
 components:
@@ -556,8 +604,8 @@ components:
                     type: boolean
                 message:
                     type: string
-        delete-me-response:
-            title: DeleteMeResponse
+        delete-response:
+            title: DeleteResponse
             type: object
             required:
                 - success
@@ -715,6 +763,25 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/song-response-data"
                         - {}
+        song-request:
+            title: SongRequest
+            type: object
+            properties:
+                title:
+                    type: string
+                artist:
+                    type: string
+                album:
+                    type: string
+                genre:
+                    type: string
+                releaseYear:
+                    type: integer
+                    format: int32
+                url:
+                    type: string
+                albumArt:
+                    type: string
 
 tags:
     - name: auth
