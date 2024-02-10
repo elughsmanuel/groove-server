@@ -4,6 +4,8 @@ import BadRequest from '../../errors/BadRequest';
 import {
     USER_NOT_FOUND,
     ARTIST_ADMIN_ALLOWED,
+    SONG_NOT_FOUND,
+    SONG_DELETED,
 } from '../utils/constants';
 
 class MusicService {
@@ -83,7 +85,7 @@ class MusicService {
         const song = await this.musicRepository.getSongById(userId, songId);
 
         if(!song) {
-            throw new BadRequest('SONG_NOT_FOUND');
+            throw new BadRequest(SONG_NOT_FOUND);
         }
 
         return {
@@ -102,7 +104,7 @@ class MusicService {
         const songExist = await this.musicRepository.getSongById(userId, songId);
 
         if(!songExist) {
-            throw new BadRequest('SONG_NOT_FOUND');
+            throw new BadRequest(SONG_NOT_FOUND);
         }
 
         const song = await this.musicRepository.updateSong(userId, songId, data);
@@ -123,14 +125,14 @@ class MusicService {
         const songExist = await this.musicRepository.getSongById(userId, songId);
 
         if(!songExist) {
-            throw new BadRequest('SONG_NOT_FOUND');
+            throw new BadRequest(SONG_NOT_FOUND);
         }
 
         await this.musicRepository.deleteSong(userId, songId);
 
         return {
             status: true,
-            message: 'SONG_DELETED',
+            message: SONG_DELETED,
         }
     }
 }
