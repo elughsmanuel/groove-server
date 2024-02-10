@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project powers a cutting-edge music streaming app, simplifying music organization, user verification, and playlist management. Designed to cater to a diverse audience, including music enthusiasts, artists, curators, advertisers, and administrator.
+This project powers a cutting-edge music streaming app, simplifying music organization, user verification, and playlist management. Designed to cater to a diverse audience, including: listeners, artists, curators, advertisers, and administrator.
 
 ## Features
 
@@ -32,7 +32,7 @@ Node.js version 16.x.x or higher
 2. Run the following command to clone:
 
 ```bash
-  git clone https://github.com/elughsmanuel/gloq-server.git
+  git clone https://github.com/elughsmanuel/groove-streaming.git
 
 ```
 
