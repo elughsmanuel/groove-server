@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project powers a cutting-edge music streaming app, simplifying music organization, user verification, and playlist management. Designed to cater to a diverse audience, including: listeners, artists, curators, advertisers, and administrator.
+This project is music streaming app, simplifying music organization, user verification, and playlist management. Designed to cater to a diverse audience, including: listeners, artists, curators, advertisers, and administrator.
 
 ## Features
 
