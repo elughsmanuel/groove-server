@@ -13,7 +13,7 @@ const musicRepository = new MusicRepository();
 const musicService = new MusicService(userRepository, musicRepository);
 
 export const addSong = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -21,7 +21,7 @@ export const addSong = async (
         const schema = await songSchema.validateAsync(req.body);
 
         const addSong = await musicService.addSong(
-            String(req.userId),
+            Number(req.userId),
             schema.title,
             schema.artist,
             schema.album,
@@ -38,7 +38,7 @@ export const addSong = async (
 };
 
 export const getAllSongs = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -49,7 +49,7 @@ export const getAllSongs = async (
         } = req.query;
 
         const songs = await musicService.getAllSongs(
-            String(req.userId),
+            Number(req.userId),
             parseFloat(page as string) || '1',
             parseFloat(perPage as string || '10'),
         );
@@ -61,7 +61,7 @@ export const getAllSongs = async (
 };
 
 export const getSongById = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -69,7 +69,7 @@ export const getSongById = async (
         const { songId } = req.params;
 
         const song = await musicService.getSongById(
-            String(req.userId),
+            Number(req.userId),
             Number(songId),
         );
 
@@ -80,7 +80,7 @@ export const getSongById = async (
 };
 
 export const updateSong = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -90,7 +90,7 @@ export const updateSong = async (
         const schema = await updateSongSchema.validateAsync(req.body);
 
         const song = await musicService.updateSong(
-            String(req.userId),
+            Number(req.userId),
             Number(songId),
             schema,
         );
@@ -102,7 +102,7 @@ export const updateSong = async (
 };
 
 export const deleteSong = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -110,7 +110,7 @@ export const deleteSong = async (
         const { songId } = req.params;
 
         const deleteSong = await musicService.deleteSong(
-            String(req.userId),
+            Number(req.userId),
             Number(songId),
         );
 

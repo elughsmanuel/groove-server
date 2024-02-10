@@ -3,10 +3,10 @@ import { Prisma, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 class MusicRepository {
-    async addSong(userId: string, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
+    async addSong(userId: number, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
         const music = await prisma.song.create({
             data: {
-                userId: parseInt(userId, 10),
+                userId: userId,
                 title: title,
                 artist: artist,
                 album: album,
@@ -20,21 +20,21 @@ class MusicRepository {
         return music;
     }
 
-    async getTotalSongCount(userId: string) {
+    async getTotalSongCount(userId: number) {
         const count = await prisma.song.count({
             where: {
-                userId: parseInt(userId, 10),
+                userId: userId,
             },
         });
       
         return count;
     }
 
-    async getAllSongs(userId: string, skip: any, perPage: any) {
+    async getAllSongs(userId: number, skip: any, perPage: any) {
         const query: Prisma.SongWhereInput = {};
       
         if (userId) {
-            query.userId = parseInt(userId, 10);
+            query.userId = userId;
         }
       
         const songs = await prisma.song.findMany({
@@ -46,10 +46,10 @@ class MusicRepository {
         return songs;
     }
 
-    async getSongById(userId: string, songId: number) {
+    async getSongById(userId: number, songId: number) {
         const song = await prisma.song.findUnique({
           where: {
-            userId: parseInt(userId, 10),
+            userId: userId,
             id: songId,
           },
         });
@@ -57,10 +57,10 @@ class MusicRepository {
         return song;
     }
 
-    async updateSong(userId: string, songId: number, data: any) {
+    async updateSong(userId: number, songId: number, data: any) {
         const song = await prisma.song.update({
           where: {
-            userId: parseInt(userId, 10),
+            userId: userId,
             id: songId,
           },
           data: {
@@ -71,10 +71,10 @@ class MusicRepository {
         return song;
     }
 
-    async deleteSong(userId: string, songId: number) {
+    async deleteSong(userId: number, songId: number) {
         const song = await prisma.song.delete({
           where: {
-            userId: parseInt(userId, 10),
+            userId: userId,
             id: songId,
           }
         });

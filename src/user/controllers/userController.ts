@@ -47,7 +47,9 @@ export const getUserById = async (
     try {
         const { userId } = req.params;
 
-        const user = await userService.getUserById(userId);
+        const user = await userService.getUserById(
+            Number(userId),
+        );
 
         return res.status(StatusCodes.OK).json(user);
     } catch (error) {
@@ -56,13 +58,13 @@ export const getUserById = async (
 };
 
 export const getMyProfile = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
         const user = await userService.getMyProfile(
-            String(req.userId)
+            Number(req.userId)
         );
 
         return res.status(StatusCodes.OK).json(user);
@@ -72,7 +74,7 @@ export const getMyProfile = async (
 };
 
 export const updateMyProfile = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -80,7 +82,7 @@ export const updateMyProfile = async (
         const schema = await updateUserSchema.validateAsync(req.body);
 
         const user = await userService.updateMyProfile(
-            String(req.userId),
+            Number(req.userId),
             schema,
         );
 
@@ -91,7 +93,7 @@ export const updateMyProfile = async (
 };
 
 export const switchUserAccess = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -99,7 +101,7 @@ export const switchUserAccess = async (
         const schema = await switchUserAccessSchema.validateAsync(req.body);
 
         const user = await userService.switchUserAccess(
-            String(req.userId), 
+            Number(req.userId), 
             schema.access,
         );
 
@@ -110,7 +112,7 @@ export const switchUserAccess = async (
 };
 
 export const updateMyPassword = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -118,7 +120,7 @@ export const updateMyPassword = async (
         const schema = await updatePasswordSchema.validateAsync(req.body);
 
         const updateMyPassword = await userService.updateMyPassword(
-            String(req.userId),
+            Number(req.userId),
             schema.password,
             schema.newPassword,
             schema.confirmPassword,
@@ -131,13 +133,13 @@ export const updateMyPassword = async (
 };
 
 export const deleteMe = async (
-    req: Request & {userId?: string}, 
+    req: Request & {userId?: number}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
         const deleteMe = await userService.deleteMe(
-            String(req.userId)
+            Number(req.userId)
         );
 
         return res.status(StatusCodes.OK).json(deleteMe);
@@ -157,7 +159,7 @@ export const updateUser = async (
         const schema = await updateUserSchema.validateAsync(req.body);
 
         const user = await userService.updateUser(
-            userId, 
+            Number(userId), 
             schema,
         );
 
@@ -178,7 +180,7 @@ export const updateUserRole = async (
         const schema = await updateUserRoleSchema.validateAsync(req.body);
 
         const user = await userService.updateUserRole(
-            userId, 
+            Number(userId), 
             schema.role,
         );
 
@@ -197,7 +199,7 @@ export const deleteUser = async (
         const { userId } = req.params;
 
         const deleteUser = await userService.deleteUser(
-            userId, 
+            Number(userId), 
         );
 
         return res.status(StatusCodes.OK).json(deleteUser);

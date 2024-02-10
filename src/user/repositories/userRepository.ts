@@ -38,10 +38,10 @@ class UserRepository {
       return user;
   }
 
-    async updateUserResetToken(userId: string, token: string, expires: Date) {
+    async updateUserResetToken(userId: number, token: string, expires: Date) {
         const updatedUser = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             resetPasswordToken: token,
@@ -67,10 +67,10 @@ class UserRepository {
     }
       
     
-      async updateUserPassword(userId: string, hashedPassword: string) {
+      async updateUserPassword(userId: number, hashedPassword: string) {
         const updatedUser = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             password: hashedPassword,
@@ -80,10 +80,10 @@ class UserRepository {
         return updatedUser;
     }
 
-    async clearUserResetToken(userId: string) {
+    async clearUserResetToken(userId: number) {
         const updatedUser = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             resetPasswordToken: null,
@@ -122,20 +122,20 @@ class UserRepository {
     
     }
 
-    async getUserById(userId: string) {
+    async getUserById(userId: number) {
         const user = await prisma.user.findUnique({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
         });
       
         return user;
     }
 
-    async updateMyProfile(userId: string, data: any) {
+    async updateMyProfile(userId: number, data: any) {
         const updatedUser = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             ...data,
@@ -145,10 +145,10 @@ class UserRepository {
         return updatedUser;
     }
 
-    async switchUserAccess(userId: string, access: any) {
+    async switchUserAccess(userId: number, access: any) {
 		const switchUserAccess = await prisma.user.update({
 			where: {
-				id: parseInt(userId, 10),
+				id: userId,
 			},
 			data: {
 				access: access,
@@ -158,10 +158,10 @@ class UserRepository {
       return switchUserAccess;
     } 
 
-    async findPasswordByUserId(userId: string) {
+    async findPasswordByUserId(userId: number) {
         const user = await prisma.user.findUnique({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           select: {
             password: true,
@@ -171,20 +171,20 @@ class UserRepository {
         return user?.password || null;
     }
 
-    async findByIdAndDelete(userId: string) {
+    async findByIdAndDelete(userId: number) {
         const user = await prisma.user.delete({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
         });
       
         return user;
     }
 
-    async updateUser(userId: string, data: any) {
+    async updateUser(userId: number, data: any) {
         const updatedUser = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             ...data,
@@ -194,10 +194,10 @@ class UserRepository {
         return updatedUser;
     }
 
-    async updateUserRole(userId: string, role: any, access: any) {
+    async updateUserRole(userId: number, role: any, access: any) {
         const updatedUserRole = await prisma.user.update({
           where: {
-            id: parseInt(userId, 10),
+            id: userId,
           },
           data: {
             role: role,

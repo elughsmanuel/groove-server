@@ -142,7 +142,7 @@ class AuthService {
         const tokenExpiresIn = Number(process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN);
         const expirationTime = new Date(Date.now() + tokenExpiresIn * 60 * 1000);
 
-        await this.userRepository.updateUserResetToken(user.id.toString(), hashedToken, expirationTime);
+        await this.userRepository.updateUserResetToken(user.id, hashedToken, expirationTime);
 
         // Send a reset password email to the user
         await this.emailService.sendResetPasswordEmail(user.email, resetToken);
@@ -177,10 +177,10 @@ class AuthService {
         const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        await this.userRepository.updateUserPassword(user.id.toString(), hashedPassword);
+        await this.userRepository.updateUserPassword(user.id, hashedPassword);
     
         // Clear the user's reset token
-        await this.userRepository.clearUserResetToken(user.id.toString());
+        await this.userRepository.clearUserResetToken(user.id);
 
         return { 
             success: true, 

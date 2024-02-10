@@ -20,7 +20,7 @@ class MusicService {
         this.musicRepository = musicRepository;
     }
 
-    async addSong(userId: string, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
+    async addSong(userId: number, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -50,7 +50,7 @@ class MusicService {
         }
     }
 
-    async getAllSongs(userId: string, page: any, perPage: any,) {
+    async getAllSongs(userId: number, page: any, perPage: any,) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -75,7 +75,7 @@ class MusicService {
         }
     }
 
-    async getSongById(userId: string, songId: number) {
+    async getSongById(userId: number, songId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -94,7 +94,7 @@ class MusicService {
         }
     }
 
-    async updateSong(userId: string, songId: number, data: any) {
+    async updateSong(userId: number, songId: number, data: any) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -115,7 +115,7 @@ class MusicService {
         }
     }
 
-    async deleteSong(userId: string, songId: number) {
+    async deleteSong(userId: number, songId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {

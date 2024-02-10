@@ -57,7 +57,7 @@ class UserService {
         }
     }
 
-    async getUserById(userId: string) {
+    async getUserById(userId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -83,7 +83,7 @@ class UserService {
         }
     }
 
-    async getMyProfile(userId: string) {
+    async getMyProfile(userId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -109,7 +109,7 @@ class UserService {
         }
     }
 
-    async updateMyProfile(userId: string, data: any) {
+    async updateMyProfile(userId: number, data: any) {
         const userExist = await this.userRepository.getUserById(userId);
 
         if(!userExist) {
@@ -137,7 +137,7 @@ class UserService {
         }
     }
 
-    async switchUserAccess(userId: string, access: any) {
+    async switchUserAccess(userId: number, access: any) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -165,7 +165,7 @@ class UserService {
         }
     }
 
-    async updateMyPassword(userId: string, password: string, newPassword: string, confirmPassword: string) {
+    async updateMyPassword(userId: number, password: string, newPassword: string, confirmPassword: string) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -204,7 +204,7 @@ class UserService {
         }
     }
 
-    async deleteMe(userId: string) {
+    async deleteMe(userId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -219,7 +219,7 @@ class UserService {
         }
     }
 
-    async updateUser(userId: string, data: any) {
+    async updateUser(userId: number, data: any) {
         const userExist = await this.userRepository.getUserById(userId);
 
         if(!userExist) {
@@ -247,7 +247,7 @@ class UserService {
         }
     }
 
-    async updateUserRole(userId: string, role: string) {
+    async updateUserRole(userId: number, role: string) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
@@ -283,7 +283,7 @@ class UserService {
         }
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId: number) {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
