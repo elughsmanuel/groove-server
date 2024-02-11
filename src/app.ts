@@ -11,7 +11,7 @@ import yamljs from 'yamljs';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import authRouter from './auth/routers/authRouter';
 import userRouter from './user/routers/userRouter';
-import musicRouter from './music/routers/musicRouter';
+import artistRouter from './music/routers/artistRouter';
 
 const app = express();
 const host = process.env.HOST || 'localhost';
@@ -47,7 +47,7 @@ app.get('/api/v1', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/music', musicRouter);
+app.use('/api/v1/artist', artistRouter);
 
 app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(docs));
 

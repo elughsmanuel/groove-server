@@ -1,5 +1,5 @@
 import UserRepository from '../../user/repositories/userRepository';
-import MusicRepository from '../repositories.ts/musicRepository';
+import ArtistRepository from '../repositories/artistRepository';
 import BadRequest from '../../errors/BadRequest';
 import {
     USER_NOT_FOUND,
@@ -8,16 +8,16 @@ import {
     SONG_DELETED,
 } from '../utils/constants';
 
-class MusicService {
+class ArtistService {
     private userRepository: UserRepository;
-    private musicRepository: MusicRepository
+    private artistRepository: ArtistRepository
 
     constructor(
         userRepository: UserRepository,
-        musicRepository: MusicRepository,
+        artistRepository: ArtistRepository,
     ) {
         this.userRepository = userRepository;
-        this.musicRepository = musicRepository;
+        this.artistRepository = artistRepository;
     }
 
     async addSong(userId: number, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
@@ -33,7 +33,7 @@ class MusicService {
             throw new BadRequest(ARTIST_ADMIN_ALLOWED);
         }
 
-        const music = await this.musicRepository.addSong(
+        const song = await this.artistRepository.addSong(
             userId,
             title,
             artist,
@@ -46,7 +46,7 @@ class MusicService {
 
         return { 
             success: true, 
-            data: music,
+            data: song,
         }
     }
 
@@ -57,14 +57,14 @@ class MusicService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const count = await this.musicRepository.getTotalSongCount(userId);
+        const count = await this.artistRepository.getTotalSongCount(userId);
 
         // Calculate pagination values
         const skip = (page - 1) * perPage;
         const currentPage = Math.ceil(page);
         const totalPages = Math.ceil(count / perPage);
 
-        const songs = await this.musicRepository.getAllSongs(userId, skip, perPage);
+        const songs = await this.artistRepository.getAllSongs(userId, skip, perPage);
 
 
         return { 
@@ -82,7 +82,7 @@ class MusicService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const song = await this.musicRepository.getSongById(userId, songId);
+        const song = await this.artistRepository.getSongById(userId, songId);
 
         if(!song) {
             throw new BadRequest(SONG_NOT_FOUND);
@@ -101,13 +101,13 @@ class MusicService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const songExist = await this.musicRepository.getSongById(userId, songId);
+        const songExist = await this.artistRepository.getSongById(userId, songId);
 
         if(!songExist) {
             throw new BadRequest(SONG_NOT_FOUND);
         }
 
-        const song = await this.musicRepository.updateSong(userId, songId, data);
+        const song = await this.artistRepository.updateSong(userId, songId, data);
 
         return {
             status: true,
@@ -122,13 +122,13 @@ class MusicService {
             throw new BadRequest(USER_NOT_FOUND);
         }
 
-        const songExist = await this.musicRepository.getSongById(userId, songId);
+        const songExist = await this.artistRepository.getSongById(userId, songId);
 
         if(!songExist) {
             throw new BadRequest(SONG_NOT_FOUND);
         }
 
-        await this.musicRepository.deleteSong(userId, songId);
+        await this.artistRepository.deleteSong(userId, songId);
 
         return {
             status: true,
@@ -137,4 +137,4 @@ class MusicService {
     }
 }
 
-export default MusicService;
+export default ArtistService;

@@ -289,7 +289,7 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/delete-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/music/add-song:
+    /api/v1/artist/add-song:
         post:
             tags:
                 - artist
@@ -309,7 +309,7 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/add-song-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/music/songs:
+    /api/v1/artist/songs:
         get:
             tags:
                 - artist
@@ -331,7 +331,7 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/get-songs-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/music/get-song/{id}:
+    /api/v1/artist/get-song/{id}:
         get:
             tags:
                 - artist
@@ -352,7 +352,7 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/song-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/music/update-song/{id}:
+    /api/v1/artist/update-song/{id}:
         patch:
             tags:
                 - artist
@@ -379,7 +379,7 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/song-response"
             security: [{ bearerAuth: [] }]
-    /api/v1/music/delete-song/{id}:
+    /api/v1/artist/delete-song/{id}:
         delete:
             tags:
                 - artist

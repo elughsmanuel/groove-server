@@ -4,13 +4,13 @@ import {
     songSchema, 
     updateSongSchema,
 } from '../../validators/musicSchema';
-import MusicService from '../services/musicService';
+import ArtistService from '../services/artistService';
 import UserRepository from '../../user/repositories/userRepository';
-import MusicRepository from '../repositories.ts/musicRepository';
+import ArtistRepository from '../repositories/artistRepository';
 
 const userRepository = new UserRepository();
-const musicRepository = new MusicRepository();
-const musicService = new MusicService(userRepository, musicRepository);
+const artistRepository = new ArtistRepository();
+const artistService = new ArtistService(userRepository, artistRepository);
 
 export const addSong = async (
     req: Request & {userId?: number}, 
@@ -20,7 +20,7 @@ export const addSong = async (
     try {
         const schema = await songSchema.validateAsync(req.body);
 
-        const addSong = await musicService.addSong(
+        const addSong = await artistService.addSong(
             Number(req.userId),
             schema.title,
             schema.artist,
@@ -48,7 +48,7 @@ export const getAllSongs = async (
             perPage,
         } = req.query;
 
-        const songs = await musicService.getAllSongs(
+        const songs = await artistService.getAllSongs(
             Number(req.userId),
             parseFloat(page as string) || '1',
             parseFloat(perPage as string || '10'),
@@ -68,7 +68,7 @@ export const getSongById = async (
     try {
         const { songId } = req.params;
 
-        const song = await musicService.getSongById(
+        const song = await artistService.getSongById(
             Number(req.userId),
             Number(songId),
         );
@@ -89,7 +89,7 @@ export const updateSong = async (
 
         const schema = await updateSongSchema.validateAsync(req.body);
 
-        const song = await musicService.updateSong(
+        const song = await artistService.updateSong(
             Number(req.userId),
             Number(songId),
             schema,
@@ -109,7 +109,7 @@ export const deleteSong = async (
     try {
         const { songId } = req.params;
 
-        const deleteSong = await musicService.deleteSong(
+        const deleteSong = await artistService.deleteSong(
             Number(req.userId),
             Number(songId),
         );

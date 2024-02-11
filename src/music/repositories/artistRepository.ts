@@ -2,7 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-class MusicRepository {
+class ArtistRepository {
     async addSong(userId: number, title: string, artist: string, album: string, genre: string, releaseYear: number, url: string, albumArt: string) {
         const music = await prisma.song.create({
             data: {
@@ -83,4 +83,4 @@ class MusicRepository {
     }
 }
 
-export default MusicRepository;
+export default ArtistRepository;
