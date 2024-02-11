@@ -289,6 +289,47 @@ paths:
                                 allOf:
                                     - $ref: "#/components/schemas/delete-response"
             security: [{ bearerAuth: [] }]
+    /api/v1/music/songs:
+        get:
+            tags:
+                - listener
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: number
+                - in: query
+                  name: perPage
+                  schema:
+                      type: number
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/get-songs-response"
+    /api/v1/music/get-song/{id}:
+        get:
+            tags:
+                - listener
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      oneOf:
+                          - type: string
+                          - type: integer
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/song-response"
     /api/v1/artist/add-song:
         post:
             tags:
@@ -787,4 +828,5 @@ tags:
     - name: auth
     - name: user
     - name: admin
+    - name: listener
     - name: artist
