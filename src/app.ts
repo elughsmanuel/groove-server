@@ -9,6 +9,7 @@ import path from 'path';
 import swaggerUI from 'swagger-ui-express';
 import yamljs from 'yamljs';
 import { errorMiddleware } from './middleware/errorMiddleware';
+import { logger } from './log/logger';
 import authRouter from './auth/routers/authRouter';
 import userRouter from './user/routers/userRouter';
 import artistRouter from './music/routers/artistRouter';
@@ -60,22 +61,22 @@ app.all('*', (req, res) => {
     });
 });
 
+app.use(errorMiddleware);
+
 const startServer = async () => {
     try {
         await prisma.$connect();
-        console.log(`[DATABASE] - Database connection has been successfully established.`);
-
-        app.use(errorMiddleware);
+        logger.info(`[DATABASE] - Database connection has been successfully established.`);
 
         try {
             httpServer.listen(port, host, () => {
-                console.log(`🌟 🛠️  [SERVER] - Server is listening on http://${host}:${port}`);
+                logger.info(`🌟 🛠️  [SERVER] - Server is listening on http://${host}:${port}`);
             });
         } catch (error){
-            console.log(`[SERVER] - Failed to start. Encountered an error during startup.`, error);
+            logger.fatal(`[SERVER] - Failed to start. Encountered an error during startup.`, error);
         } 
     } catch (error) {
-        console.log(`[DATABASE] - Server not started due to database connection error.`, error);
+        logger.fatal(`[DATABASE] - Server not started due to database connection error.`, error);
     }
   
 };
@@ -83,4 +84,3 @@ const startServer = async () => {
 startServer();
 
 export default app;
- 

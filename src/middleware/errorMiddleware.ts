@@ -8,6 +8,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { 
     UNIQUE_CONSTRAINT,
  } from '../auth/utils/constants';
+import { logger } from '../log/logger';
 
 export const errorMiddleware = (
     err: any, 
@@ -59,8 +60,8 @@ export const errorMiddleware = (
 
     // Handle errors in development by logging the stack
     if (process.env.NODE_ENV === 'development') {
-        console.log(err.message);
-        console.log(err.stack);
+        logger.error(err.message);
+        logger.error(err.stack);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             error: err.message,

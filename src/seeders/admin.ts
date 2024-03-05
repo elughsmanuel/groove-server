@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import { ADMIN } from "../auth/utils/constants";
+import { logger } from "../log/logger";
 
 const prisma = new PrismaClient();
 
 async function seedData() {
     // Your seeding logic using Prisma Client
     try {
-        console.log(`[SEEDING] - Seeding started...`);
+        logger.info(`[SEEDING] - Seeding started...`);
 
         // Hash the new password and update the user's password
         const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT));
@@ -26,10 +27,10 @@ async function seedData() {
             },
         });
 
-        console.log(`[SEEDING] - Seeding successfully completed.`);
+        logger.info(`[SEEDING] - Seeding successfully completed.`);
 
     } catch (error) {
-        console.log(`[ERROR] - Error during seeding:`, error);
+        logger.error(`[ERROR] - Error during seeding:`, error);
     } finally {
         await prisma.$disconnect();
     }
