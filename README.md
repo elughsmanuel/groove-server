@@ -11,10 +11,6 @@ This project is music streaming app, simplifying music organization, user verifi
 - **Streaming Experience:** Record and manage financial transactions seamlessly.
 - **User Authentication** Secure access for both users and administrators.
 
-## API Documentation
-
-For detailed API documentation, you can refer to the [Swagger/OpenAPI Documentation.](http://localhost:8000/api/v1/docs)
-
 ## Built With
 
 Express.js - Web Framework  
